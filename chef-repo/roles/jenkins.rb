@@ -4,6 +4,7 @@ run_list [ "recipe[yum]", "recipe[build-essential]", "recipe[java]", "recipe[jen
 default_attributes(
   'jenkins' => {
     'http_proxy' => {
+      'host_name' => "jenkins.local",
       'variant' => 'nginx'
     }
   }

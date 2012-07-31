@@ -12,7 +12,6 @@ include_recipe "postgresql::server"
 node.default['gerrit']['war_file'] = File.basename(node['gerrit']['url'])
 node.default['gerrit']['war_path'] = File.join(node['gerrit']['path'], node['gerrit']['war_file'])
 node.default['gerrit']['bouncy_castle_war_path'] = File.join(node['gerrit']['site_path'], "lib", File.basename(node['gerrit']['bouncy_castle_url']))
-node.default['gerrit']['canonical_url'] = "http://#{node['ipaddress']}:#{node['gerrit']['http_port']}/"
 
 directory node['gerrit']['path'] do
   owner "root"
@@ -26,6 +25,16 @@ end
 
 directory node['gerrit']['site_path'] do
   owner node['gerrit']['username']
+end
+
+directory File.join(node['gerrit']['site_path'], "etc") do
+  owner node['gerrit']['username']
+  mode "0755"
+end
+
+directory File.join(node['gerrit']['site_path'], "lib") do
+  owner node['gerrit']['username']
+  mode "0755"
 end
 
 remote_file node['gerrit']['war_path'] do
@@ -46,11 +55,6 @@ postgresql_database node['gerrit']['db_name'] do
   owner node['gerrit']['username']
 end
 
-execute "java -jar #{node['gerrit']['war_path']} init -d #{node['gerrit']['site_path']} --batch" do
-  user node['gerrit']['username']
-  not_if { File.directory?(File.join(node['gerrit']['site_path'], "bin")) }
-end
-
 remote_file node['gerrit']['bouncy_castle_war_path'] do
   source node['gerrit']['bouncy_castle_url']
   owner "root"
@@ -62,12 +66,19 @@ template File.join(node['gerrit']['site_path'], 'etc', 'gerrit.config') do
   source "gerrit.config.erb"
   owner "root"
   mode "0644"
+  notifies :restart, 'service[gerrit]'
 end
 
 template File.join(node['gerrit']['site_path'], 'etc', 'secure.config') do
   source "secure.config.erb"
   owner "gerrit2"
   mode "0600"
+  notifies :restart, 'service[gerrit]'
+end
+
+execute "java -jar #{node['gerrit']['war_path']} init -d #{node['gerrit']['site_path']} --batch --no-auto-start" do
+  user node['gerrit']['username']
+  not_if { File.directory?(File.join(node['gerrit']['site_path'], "bin")) }
 end
 
 file "/etc/default/gerritcodereview" do
@@ -76,5 +87,34 @@ file "/etc/default/gerritcodereview" do
   content <<EOH
 GERRIT_SITE=#{node['gerrit']['site_path']}
 EOH
+end
+
+include_recipe "nginx::source"
+
+template "#{node['nginx']['dir']}/sites-available/gerrit.conf" do
+  source      "nginx.conf.erb"
+  owner       'root'
+  group       'root'
+  mode        '0644'
+  variables(
+    :host_name        => node['gerrit']['http_proxy']['host_name'],
+    :host_aliases     => node['gerrit']['http_proxy']['host_aliases'],
+    :listen_ports     => node['gerrit']['http_proxy']['listen_ports'],
+    :max_upload_size  => node['gerrit']['http_proxy']['client_max_body_size']
+  )
+  notifies :restart, 'service[nginx]'
+end
+
+nginx_site "gerrit.conf" do
+  enable true
+end
+
+link "/etc/init.d/gerrit" do
+  to File.join(node['gerrit']['site_path'], "bin", "gerrit.sh") 
+end
+
+service "gerrit" do
+  supports :restart => true 
+  action [:enable, :start]
 end
 

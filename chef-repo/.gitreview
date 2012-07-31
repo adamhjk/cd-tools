@@ -1,0 +1,5 @@
+[gerrit]
+host=review.local
+port=29418
+project=cd-chef-repo.git
+defaultbranch=master

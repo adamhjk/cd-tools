@@ -1,6 +1,18 @@
 default['gerrit']['path'] = "/srv/gerrit"
+default['gerrit']['site_path'] = "/srv/gerrit/site_path"
 default['gerrit']['url'] = 'http://gerrit.googlecode.com/files/gerrit-2.4.2.war'
 default['gerrit']['sha256'] = '70342c53969c898211b43de0856ecf8d6d658174e718d4beda5348158995398f'
-default['gerrit']['username'] = 'gerrit'
-
-
+default['gerrit']['bouncy_castle_url'] = 'http://www.bouncycastle.org/download/bcprov-jdk16-144.jar'
+default['gerrit']['bouncy_castle_sha256'] = 'b1562dc40c5b219f754c2f33a807c453310e9093be87e8c9299eb9785774ef89'
+default['gerrit']['username'] = 'gerrit2'
+default['gerrit']['db_password'] = 'gerrit2'
+default['gerrit']['db_server'] = 'localhost'
+default['gerrit']['db_name'] = "gerrit2"
+default['gerrit']['auth_method'] = "OPENID"
+default['gerrit']['smtp_server'] = "localhost"
+default['gerrit']['smtp_port'] = "25"
+default['gerrit']['smtp_encryption'] = "none"
+default['gerrit']['smtp_username'] = nil 
+default['gerrit']['ssh_listen'] = '*:29418'
+default['gerrit']['reverse_proxy'] = false 
+default['gerrit']['http_listen_url'] = 'http://*:8081/'

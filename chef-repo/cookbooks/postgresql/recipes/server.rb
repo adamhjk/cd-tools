@@ -61,6 +61,7 @@ bash "assign-postgres-password" do
 echo "ALTER ROLE postgres ENCRYPTED PASSWORD '#{node[:postgresql][:password][:postgres]}';" | psql
   EOH
   not_if do
+    require 'pg'
     begin
       require 'rubygems'
       Gem.clear_paths

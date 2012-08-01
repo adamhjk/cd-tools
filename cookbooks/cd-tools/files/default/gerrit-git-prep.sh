@@ -97,7 +97,7 @@ function merge_changes {
 set -x
 if [[ ! -e .git ]]
 then
-    git clone git fetch ssh://jenkins@$SITE:29418/$PROJECT.git .
+    git clone ssh://jenkins@$SITE:29418/$GERRIT_PROJECT.git .
 fi
 git remote update || git remote update # attempt to work around bug #925790
 git reset --hard

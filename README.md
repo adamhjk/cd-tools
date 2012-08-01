@@ -20,6 +20,7 @@ Admin->Project->All-Projects->Access
   refs/*
     + Read -> Non-Interactive Users
     + Push -> Administrators -> Force Push Checked
+    + Create References -> Administrators
   refs/heads/*
     + Push -> Administrators -> Force Push Checked
     + Label Verified -> Non-Interactive Users (-1/+1)
@@ -32,3 +33,15 @@ Admin->Project->All-Projects->Access
 Add the Jenkins suer to the Non-Interactive Users group
 
 # Creating a repository
+
+Admin->Projects->Create New Project
+Name: SHould match the upstream github repo
+Rights Inherit From: All-Projects
+
+In the project itself
+
+  Merge if neccessary
+  Automatically resolve conflicts
+  Require Change ID
+  (If it's open source, add the signed-off-by)
+

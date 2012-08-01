@@ -1,5 +1,5 @@
 [gerrit]
 host=review.local
 port=29418
-project=adamhjk/cd-tools.git
+project=cd-tools
 defaultbranch=master

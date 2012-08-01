@@ -8,7 +8,7 @@ default_attributes(
       'variant' => 'nginx'
     },
     'server' => {
-      'plugins' => [ 'git', 'gerrit-trigger', 'build-pipeline-plugin', 'github', 'greenballs' ]
+      'plugins' => [ 'git', 'gerrit-trigger', 'build-pipeline-plugin', 'github', 'greenballs', 'analysis-core', 'warnings' ]
     }
   },
   'gerrit' => {

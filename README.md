@@ -32,6 +32,10 @@ Admin->Project->All-Projects->Access
 
 Add the Jenkins suer to the Non-Interactive Users group
 
+# Configure gerrit for ssh to github
+
+Make sure you add the ssh host key for git@github.com to gerrit's ssh known hosts, and have restarted gerrit
+
 # Creating a repository
 
 Admin->Projects->Create New Project
@@ -44,4 +48,21 @@ In the project itself
   Automatically resolve conflicts
   Require Change ID
   (If it's open source, add the signed-off-by)
+
+# Test Flow for Cookbooks
+
+- Check Jobs
+  - Merge
+  - Syntax
+  - Foodcritic
+- Gate Tests
+  - Syntax
+  - Foodcritic
+  - Chef Server Dev Environment Update
+- Promotion
+  - Dev->Integration
+  - Dev->Staging
+  - Staging->Production
+  - Production->A
+  - A->B
 

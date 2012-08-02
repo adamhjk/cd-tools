@@ -1,5 +1,7 @@
 actions :create, :attach, :detach, :snapshot, :prune
 
+default_action :create
+
 attribute :aws_access_key,        :kind_of => String
 attribute :aws_secret_access_key, :kind_of => String
 attribute :size,                  :kind_of => Integer

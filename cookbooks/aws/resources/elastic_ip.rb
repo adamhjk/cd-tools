@@ -1,5 +1,7 @@
 actions :associate, :disassociate
 
+default_action :associate
+
 attribute :aws_access_key,        :kind_of => String
 attribute :aws_secret_access_key, :kind_of => String
 attribute :ip,                    :kind_of => String

@@ -105,7 +105,7 @@ end
 def current_installed_version
   @current_installed_version ||= begin
     if installed_packages.include?(@new_resource.package_name)
-      installed_packages[@new_resource.package_name][:version]
+      installed_packages[@new_resource.package_name]['version']
     end
   end
 end
@@ -124,7 +124,7 @@ def install_package(name,version)
 end
 
 def remove_package(name, version)
-  uninstall_string = installed_packages[@new_resource.package_name][:uninstall_string]
+  uninstall_string = installed_packages[@new_resource.package_name]['uninstall_string']
   Chef::Log.info("Registry provided uninstall string for #{@new_resource} is '#{uninstall_string}'")
   uninstall_command = begin
     if uninstall_string =~ /msiexec/i

@@ -59,7 +59,7 @@ action :install do
       FileUtils.chown new_resource.owner, new_resource.owner, app_root
     end
 
-    r = remote_file "#{Chef::Config[:file_cache_path]}/#{tarball_name}" do
+    r = remote_file "#{Chef::Config['file_cache_path']}/#{tarball_name}" do
       source new_resource.url
       checksum new_resource.checksum
       mode 0755
@@ -74,7 +74,7 @@ action :install do
     when /^.*\.bin/
       cmd = Chef::ShellOut.new(
                                %Q[ cd "#{tmpdir}";
-                                   cp "#{Chef::Config[:file_cache_path]}/#{tarball_name}" . ;
+                                   cp "#{Chef::Config['file_cache_path']}/#{tarball_name}" . ;
                                    bash ./#{tarball_name} -noregister
                                  ] ).run_command
       unless cmd.exitstatus == 0
@@ -82,14 +82,14 @@ action :install do
       end
     when /^.*\.zip/
       cmd = Chef::ShellOut.new(
-                         %Q[ unzip "#{Chef::Config[:file_cache_path]}/#{tarball_name}" -d "#{tmpdir}" ]
+                         %Q[ unzip "#{Chef::Config['file_cache_path']}/#{tarball_name}" -d "#{tmpdir}" ]
                                ).run_command
       unless cmd.exitstatus == 0
         Chef::Application.fatal!("Failed to extract file #{tarball_name}!")
       end
     when /^.*\.tar.gz/
       cmd = Chef::ShellOut.new(
-                         %Q[ tar xvzf "#{Chef::Config[:file_cache_path]}/#{tarball_name}" -C "#{tmpdir}" ]
+                         %Q[ tar xvzf "#{Chef::Config['file_cache_path']}/#{tarball_name}" -C "#{tmpdir}" ]
                                ).run_command
       unless cmd.exitstatus == 0
         Chef::Application.fatal!("Failed to extract file #{tarball_name}!")

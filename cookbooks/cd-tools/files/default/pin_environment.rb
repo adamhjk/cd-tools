@@ -18,7 +18,7 @@ end
 
 cookbook_versions = {}
 
-Dir["#{Chef::Config[:cookbook_path]}/*"].each do |cookbook|
+Dir["#{Chef::Config['cookbook_path']}/*"].each do |cookbook|
   next unless File.directory?(cookbook)
   metadata_file = File.expand_path(File.join(cookbook, "metadata.rb"))
   File.read(metadata_file).each_line do |line|

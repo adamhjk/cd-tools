@@ -30,7 +30,7 @@ class Chef
         @database_name = nil
         @table = nil
         @host = 'localhost'
-        @privileges = [:all]
+        @privileges = ['all']
 
         @allowed_actions.push(:create, :drop, :grant)
         @action = :create

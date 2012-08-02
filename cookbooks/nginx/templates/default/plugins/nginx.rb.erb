@@ -39,10 +39,10 @@ def parse_flags(flags)
 end
 
 nginx Mash.new unless nginx
-nginx[:version]             = nil unless nginx[:version]
-nginx[:configure_arguments] = Array.new unless nginx[:configure_arguments]
-nginx[:prefix]              = nil unless nginx[:prefix]
-nginx[:conf_path]           = nil unless nginx[:conf_path]
+nginx['version']             = nil unless nginx['version']
+nginx['configure_arguments'] = Array.new unless nginx['configure_arguments']
+nginx['prefix']              = nil unless nginx['prefix']
+nginx['conf_path']           = nil unless nginx['conf_path']
 
 status, stdout, stderr = run_command(:no_status_check => true, :command => "<%= @nginx_bin %> -V")
 
@@ -53,14 +53,14 @@ if status == 0
       # This could be better: I'm splitting on configure arguments which removes them and also 
       # adds a blank string at index 0 of the array. This is why we drop index 0 and map to 
       # add the '--' prefix back to the configure argument.
-      nginx[:configure_arguments] = $1.split(/\s--/).drop(1).map { |ca| "--#{ca}" }
+      nginx['configure_arguments'] = $1.split(/\s--/).drop(1).map { |ca| "--#{ca}" }
 
-      prefix, conf_path = parse_flags(nginx[:configure_arguments])
+      prefix, conf_path = parse_flags(nginx['configure_arguments'])
 
-      nginx[:prefix] = prefix
-      nginx[:conf_path] = conf_path
+      nginx['prefix'] = prefix
+      nginx['conf_path'] = conf_path
     when /^nginx version: nginx\/(.+)/
-      nginx[:version] = $1
+      nginx['version'] = $1
     end
   end
 end

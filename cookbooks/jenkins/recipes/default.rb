@@ -22,49 +22,49 @@
 # limitations under the License.
 #
 
-pkey = "#{node[:jenkins][:server][:home]}/.ssh/id_rsa"
+pkey = "#{node['jenkins']['server']['home']}/.ssh/id_rsa"
 tmp = "/tmp"
 
-user node[:jenkins][:server][:user] do
-  home node[:jenkins][:server][:home]
+user node['jenkins']['server']['user'] do
+  home node['jenkins']['server']['home']
 end
 
-directory node[:jenkins][:server][:home] do
+directory node['jenkins']['server']['home'] do
   recursive true
-  owner node[:jenkins][:server][:user]
-  group node[:jenkins][:server][:group]
+  owner node['jenkins']['server']['user']
+  group node['jenkins']['server']['group']
 end
 
-directory "#{node[:jenkins][:server][:home]}/.ssh" do
+directory "#{node['jenkins']['server']['home']}/.ssh" do
   mode 0700
-  owner node[:jenkins][:server][:user]
-  group node[:jenkins][:server][:group]
+  owner node['jenkins']['server']['user']
+  group node['jenkins']['server']['group']
 end
 
 execute "ssh-keygen -f #{pkey} -N ''" do
-  user  node[:jenkins][:server][:user]
-  group node[:jenkins][:server][:group]
+  user  node['jenkins']['server']['user']
+  group node['jenkins']['server']['group']
   not_if { File.exists?(pkey) }
 end
 
 ruby_block "store jenkins ssh pubkey" do
   block do
-    node.set[:jenkins][:server][:pubkey] = File.open("#{pkey}.pub") { |f| f.gets }
+    node.set['jenkins']['server']['pubkey'] = File.open("#{pkey}.pub") { |f| f.gets }
   end
 end
 
-directory "#{node[:jenkins][:server][:home]}/plugins" do
-  owner node[:jenkins][:server][:user]
-  group node[:jenkins][:server][:group]
-  only_if { node[:jenkins][:server][:plugins].size > 0 }
+directory "#{node['jenkins']['server']['home']}/plugins" do
+  owner node['jenkins']['server']['user']
+  group node['jenkins']['server']['group']
+  only_if { node['jenkins']['server']['plugins'].size > 0 }
 end
 
-node[:jenkins][:server][:plugins].each do |name|
-  remote_file "#{node[:jenkins][:server][:home]}/plugins/#{name}.hpi" do
-    source "#{node[:jenkins][:mirror]}/plugins/#{name}/latest/#{name}.hpi"
+node['jenkins']['server']['plugins'].each do |name|
+  remote_file "#{node['jenkins']['server']['home']}/plugins/#{name}.hpi" do
+    source "#{node['jenkins']['mirror']}/plugins/#{name}/latest/#{name}.hpi"
     backup false
-    owner node[:jenkins][:server][:user]
-    group node[:jenkins][:server][:group]
+    owner node['jenkins']['server']['user']
+    group node['jenkins']['server']['group']
     action :create_if_missing
   end
 end
@@ -108,11 +108,11 @@ ruby_block "netstat" do
   block do
     10.times do
       if IO.popen("netstat -lnt").entries.select { |entry|
-          entry.split[3] =~ /:#{node[:jenkins][:server][:port]}$/
+          entry.split[3] =~ /:#{node['jenkins']['server']['port']}$/
         }.size == 0
         break
       end
-      Chef::Log.debug("service[jenkins] still listening (port #{node[:jenkins][:server][:port]})")
+      Chef::Log.debug("service[jenkins] still listening (port #{node['jenkins']['server']['port']})")
       sleep 1
     end
   end
@@ -128,7 +128,7 @@ end
 ruby_block "block_until_operational" do
   block do
     until IO.popen("netstat -lnt").entries.select { |entry|
-        entry.split[3] =~ /:#{node[:jenkins][:server][:port]}$/
+        entry.split[3] =~ /:#{node['jenkins']['server']['port']}$/
       }.size == 1
       Chef::Log.debug "service[jenkins] not listening on port #{node.jenkins.server.port}"
       sleep 1
@@ -171,7 +171,7 @@ log "plugins updated, restarting jenkins" do
   only_if do
     if File.exists?(pid_file)
       htime = File.mtime(pid_file)
-      Dir["#{node[:jenkins][:server][:home]}/plugins/*.hpi"].select { |file|
+      Dir["#{node['jenkins']['server']['home']}/plugins/*.hpi"].select { |file|
         File.mtime(file) > htime
       }.size > 0
     end
@@ -181,7 +181,7 @@ log "plugins updated, restarting jenkins" do
 end
 
 # Front Jenkins with an HTTP server
-case node[:jenkins][:http_proxy][:variant]
+case node['jenkins']['http_proxy']['variant']
 when "nginx"
   include_recipe "jenkins::proxy_nginx"
 when "apache2"
@@ -191,7 +191,7 @@ end
 if node.jenkins.iptables_allow == "enable"
   include_recipe "iptables"
   iptables_rule "port_jenkins" do
-    if node[:jenkins][:iptables_allow] == "enable"
+    if node['jenkins']['iptables_allow'] == "enable"
       enable true
     else
       enable false

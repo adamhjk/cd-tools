@@ -27,14 +27,14 @@ module PromoteConfig
       $chef_server_alias = @from_server
       ENV['CHEF_SERVER_ALIAS'] = @from_server
       Chef::Config.from_file(@knife_rb)
-      Chef::Log.info("Using the from server: #{Chef::Config[:chef_server_url]}")
+      Chef::Log.info("Using the from server: #{Chef::Config['chef_server_url']}")
     end
 
     def use_to
       $chef_server_alias = @to_server
       ENV['CHEF_SERVER_ALIAS'] = @to_server
       Chef::Config.from_file(@knife_rb)
-      Chef::Log.info("Using the to server: #{Chef::Config[:chef_server_url]}")
+      Chef::Log.info("Using the to server: #{Chef::Config['chef_server_url']}")
     end
 
     def same_config?
@@ -49,8 +49,8 @@ def download_cookbook(cookbook, version)
   cookbook_file_path = File.expand_path(File.join(File.dirname(__FILE__), "..", "cookbooks", cookbook))
   Chef::ShellOut.new("mkdir -p #{cookbook_file_path}").run_command.error!
   download = Chef::Knife::CookbookDownload.new
-  download.config[:download_directory] = cookbook_file_path
-  download.config[:force] = true
+  download.config['download_directory'] = cookbook_file_path
+  download.config['force'] = true
   download.name_args = [ cookbook, version ]
   download.run
 end
@@ -60,8 +60,8 @@ def upload_cookbook(cookbook)
   PromoteConfig.use_to
   cookbook_path = File.expand_path(File.join(File.dirname(__FILE__), "..", "cookbooks"))
   upload = Chef::Knife::CookbookUpload.new
-  upload.config[:cookbook_path] = cookbook_path
-  upload.config[:force] = true
+  upload.config['cookbook_path'] = cookbook_path
+  upload.config['force'] = true
   upload.name_args = [ cookbook ]
   upload.run
 end

@@ -48,7 +48,7 @@ class WindowsRebootHandler < Chef::Handler
   # reboot cause CHEF says so:
   # reboot explicitly requested in our cookbook code
   def reboot_requested?
-    node.run_state[:reboot_requested] == true
+    node.run_state['reboot_requested'] == true
   end
 
   # reboot cause WIN says so:
@@ -67,10 +67,10 @@ class WindowsRebootHandler < Chef::Handler
   end
 
   def timeout
-    node.run_state[:reboot_timeout] || @timeout
+    node.run_state['reboot_timeout'] || @timeout
   end
 
   def reason
-    node.run_state[:reboot_reason] || @reason
+    node.run_state['reboot_reason'] || @reason
   end
 end

@@ -65,7 +65,7 @@ module Windows
       @installer_file_path ||= begin
 
         if(source =~ /^(https?:\/\/)(.*\/)(.*)$/)
-          cache_file_path = "#{Chef::Config[:file_cache_path]}/#{::File.basename(source)}"
+          cache_file_path = "#{Chef::Config['file_cache_path']}/#{::File.basename(source)}"
           Chef::Log.debug("Caching a copy of file #{source} at #{cache_file_path}")
           r = Chef::Resource::RemoteFile.new(cache_file_path, run_context)
           r.source(source)

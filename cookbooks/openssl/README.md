@@ -15,7 +15,7 @@ Most often this will be used to generate a secure password for an attribute.
 
     include Opscode::OpenSSL::Password
 
-    set_unless[:my_password] = secure_password
+    set_unless['my_password'] = secure_password
 
 License and Author
 ====

@@ -78,7 +78,7 @@ Execute a batch script using the cmd.exe interpreter (much like the script resou
 
     windows_batch "unzip_and_move_ruby" do
       code <<-EOH
-      7z.exe x #{Chef::Config[:file_cache_path]}/ruby-1.8.7-p352-i386-mingw32.7z  -oC:\\source -r -y
+      7z.exe x #{Chef::Config['file_cache_path']}/ruby-1.8.7-p352-i386-mingw32.7z  -oC:\\source -r -y
       xcopy C:\\source\\ruby-1.8.7-p352-i386-mingw32 C:\\ruby /e /y
       EOH
     end
@@ -283,7 +283,7 @@ Creates and modifies Windows registry keys.
 ### Examples
 
     # make the local windows proxy match the one set for Chef
-    proxy = URI.parse(Chef::Config[:http_proxy])
+    proxy = URI.parse(Chef::Config['http_proxy'])
     windows_registry 'HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings' do
       values 'ProxyEnable' => 1, 'ProxyServer' => "#{proxy.host}:#{proxy.port}", 'ProxyOverride' => '<local>'
     end

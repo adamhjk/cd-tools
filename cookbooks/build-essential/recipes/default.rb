@@ -61,7 +61,7 @@ when "darwin"
   result = Chef::ShellOut.new("pkgutil --pkgs").run_command
   installed = result.stdout.split("\n").include?("com.apple.pkg.gcc4.2Leo")
   pkg_filename = File.basename(node['build_essential']['osx']['gcc_installer_url'])
-  pkg_path = "#{Chef::Config[:file_cache_path]}/#{pkg_filename}"
+  pkg_path = "#{Chef::Config['file_cache_path']}/#{pkg_filename}"
 
   r = remote_file pkg_path do
     source node['build_essential']['osx']['gcc_installer_url']

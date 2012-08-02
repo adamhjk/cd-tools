@@ -77,11 +77,11 @@ class Chef
         def db
           @db ||= begin
             ::Mysql.new(
-              @new_resource.connection[:host],
-              @new_resource.connection[:username],
-              @new_resource.connection[:password],
+              @new_resource.connection['host'],
+              @new_resource.connection['username'],
+              @new_resource.connection['password'],
               nil,
-              @new_resource.connection[:port] || 3306
+              @new_resource.connection['port'] || 3306
             )
           end
         end

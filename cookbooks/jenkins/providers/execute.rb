@@ -30,12 +30,12 @@ def action_run
     :command => @new_resource.command,
     :command_string => @new_resource.to_s,
   }
-  args[:only_if] = @new_resource.only_if if @new_resource.only_if
-  args[:not_if] = @new_resource.not_if if @new_resource.not_if
-  args[:timeout] = @new_resource.timeout if @new_resource.timeout
-  args[:cwd] = @new_resource.cwd if @new_resource.cwd
+  args['only_if'] = @new_resource.only_if if @new_resource.only_if
+  args['not_if'] = @new_resource.not_if if @new_resource.not_if
+  args['timeout'] = @new_resource.timeout if @new_resource.timeout
+  args['cwd'] = @new_resource.cwd if @new_resource.cwd
 
-  status, stdout, stderr = output_of_command(args[:command], args)
+  status, stdout, stderr = output_of_command(args['command'], args)
   if status.exitstatus == 0
     @new_resource.block.call(stdout) if @new_resource.block
     @new_resource.updated_by_last_action(true)

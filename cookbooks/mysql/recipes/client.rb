@@ -34,13 +34,13 @@ when "freebsd"
   %w{mysql55-client}
 when "windows"
   package_file = node['mysql']['client']['package_file']
-  remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
+  remote_file "#{Chef::Config['file_cache_path']}/#{package_file}" do
     source node['mysql']['client']['url']
-    not_if { File.exists? "#{Chef::Config[:file_cache_path]}/#{package_file}" }
+    not_if { File.exists? "#{Chef::Config['file_cache_path']}/#{package_file}" }
   end
 
   windows_package node['mysql']['client']['package_name'] do
-    source "#{Chef::Config[:file_cache_path]}/#{package_file}"
+    source "#{Chef::Config['file_cache_path']}/#{package_file}"
   end
   windows_path node['mysql']['client']['bin_dir'] do
     action :add

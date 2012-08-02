@@ -60,13 +60,13 @@ end
 if platform? 'windows'
   package_file = node['mysql']['package_file']
 
-  remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
+  remote_file "#{Chef::Config['file_cache_path']}/#{package_file}" do
     source node['mysql']['url']
-    not_if { File.exists? "#{Chef::Config[:file_cache_path]}/#{package_file}" }
+    not_if { File.exists? "#{Chef::Config['file_cache_path']}/#{package_file}" }
   end
 
   windows_package node['mysql']['package_name'] do
-    source "#{Chef::Config[:file_cache_path]}/#{package_file}"
+    source "#{Chef::Config['file_cache_path']}/#{package_file}"
   end
 
   def package(*args, &blk)
@@ -127,7 +127,7 @@ template "#{node['mysql']['conf_dir']}/my.cnf" do
   variables :skip_federated => skip_federated
 end
 
-unless Chef::Config[:solo]
+unless Chef::Config['solo']
   ruby_block "save node data" do
     block do
       node.save

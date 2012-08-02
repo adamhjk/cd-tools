@@ -18,4 +18,4 @@
 # limitations under the License.
 #
 
-default["chef_handler"]["handler_path"] = "#{File.expand_path(File.join(Chef::Config[:file_cache_path],'..'))}/handlers"
+default["chef_handler"]["handler_path"] = "#{File.expand_path(File.join(Chef::Config['file_cache_path'],'..'))}/handlers"

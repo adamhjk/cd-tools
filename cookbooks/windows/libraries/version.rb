@@ -157,9 +157,9 @@ module Windows
     WIN_VERSIONS.each do |k,v|
       method_name = "#{k.gsub(/\s/, '_').downcase}?"
       define_method(method_name) do
-        (@major_version == v[:major]) &&
-        (@minor_version == v[:minor]) &&
-        (v[:callable] ? v[:callable].call : true)
+        (@major_version == v['major']) &&
+        (@minor_version == v['minor']) &&
+        (v['callable'] ? v['callable'].call : true)
       end
       marketing_names << [k, method_name]
     end
@@ -174,7 +174,7 @@ module Windows
     %w{ core full datacenter }.each do |m|
       define_method("server_#{m}?") do
         if @sku
-          !(SKU[@sku][:name] =~ /#{m}/i).nil?
+          !(SKU[@sku]['name'] =~ /#{m}/i).nil?
         else
           false
         end

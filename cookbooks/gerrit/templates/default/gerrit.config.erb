@@ -1,0 +1,21 @@
+[gerrit]
+	basePath = git
+  canonicalWebUrl = <%= node['gerrit']['canonical_url'] %>
+[database]
+	type = POSTGRESQL
+  hostname = <%= node['gerrit']['db_server'] %>
+  database = <%= node['gerrit']['db_name'] %>
+  username = <%= node['gerrit']['username'] %>
+[auth]
+  type = <%= node['gerrit']['auth_method'] %>
+[sendemail]
+  smtpServer = <%= node['gerrit']['smtp_server'] %>
+[container]
+  user = <%= node['gerrit']['username'] %>
+  javaHome = <%= node['java']['java_home'] %>
+[sshd]
+  listenAddress = <%= node['gerrit']['ssh_listen'] %>
+[httpd]
+  listenUrl = <%= node['gerrit']['http_listen_url'] %>
+[cache]
+	directory = cache

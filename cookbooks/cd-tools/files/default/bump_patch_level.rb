@@ -1,4 +1,4 @@
-#!/usr/bin/ruby    
+#!/opt/chef/embedded/bin/ruby
 
 def bump_patch_level(metadatarb)
   File.open(metadatarb, 'r+') do |f|

@@ -86,4 +86,4 @@ Manage Jenkins->Gerrit Trigger
 
 # Create the first check job
 
-Hrm
+Hrm - getting much closer

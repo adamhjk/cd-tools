@@ -2,7 +2,7 @@ maintainer        "Opscode, Inc."
 maintainer_email  "cookbooks@opscode.com"
 license           "Apache 2.0"
 description       "Installs C compiler / build tools"
-version          "1.1.6"
+version          "1.1.7"
 recipe            "build-essential", "Installs packages required for compiling C software from source."
 
 %w{ fedora redhat centos ubuntu debian amazon }.each do |os|

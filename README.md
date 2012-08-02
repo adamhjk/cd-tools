@@ -15,7 +15,7 @@ OK - the recipe will get you set up, but there are manual steps. You need to log
 
 # Add the gerrit user
 
-  cat /var/lib/jenkins/.ssh/id_rsa.pub | ssh -p29418 adam@review.local gerrit create-account --ssh-key - --full-name Jenkins jenkins
+  cat /var/lib/jenkins/.ssh/id_rsa.pub | ssh -p29418 adam@review.local gerrit create-account --email 'jenkins@jenkins.local' --ssh-key - --full-name Jenkins jenkins
 
 # Add the Jenkins suer to the Non-Interactive Users group
 

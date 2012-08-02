@@ -6,11 +6,12 @@
 require 'chef/environment'
 require 'chef'
 
-Chef::Config.from_file(File.expand_path(File.join(File.dirname(__FILE__), "..", ".chef", "knife.rb")))
+Chef::Config.from_file(File.expand_path(File.join(ENV['WORKSPACE'], "ci-knife.rb")))
 
 def pin_env(env, cookbook_versions)
   to = Chef::Environment.load(env)
   cookbook_versions.each do |cb, version|
+    puts "Pinning #{cb} #{version} in #{env}"
     to.cookbook_versions[cb] = version
   end
   to.save
@@ -18,7 +19,7 @@ end
 
 cookbook_versions = {}
 
-Dir["#{Chef::Config['cookbook_path']}/*"].each do |cookbook|
+Dir["#{Chef::Config['cookbook_path'][0]}/*"].each do |cookbook|
   next unless File.directory?(cookbook)
   metadata_file = File.expand_path(File.join(cookbook, "metadata.rb"))
   File.read(metadata_file).each_line do |line|
@@ -31,8 +32,8 @@ end
 if ARGV[1] == "integration"
   Chef::Environment.list.each do |env, uri|
     if env != ARGV[0] && env =~ /^(dev-|integration)/
-      pin_env(env, cookbook_versions) 
-    end 
+      pin_env(env, cookbook_versions)
+    end
   end
 else
   pin_env(ARGV[0], cookbook_versions)

@@ -3,7 +3,7 @@ cd-tools
 
 cd tools!
 
-are the bestest
+are the bestest - seriously
 
 ------
 gerrit

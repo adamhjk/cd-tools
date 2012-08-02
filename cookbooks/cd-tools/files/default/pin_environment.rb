@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/opt/chef/embedded/bin/ruby
 #
 # Pin a given environment to the cookbook revisions in the current repository
 #

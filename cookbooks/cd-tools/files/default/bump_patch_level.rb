@@ -23,10 +23,17 @@ end
 
 updated = false
 
+if !system("git checkout master")
+  raise "Failed to checkout master"
+end
+
+seen_cookbooks = [] 
+
 STDIN.each_line do |diff_line|
   if diff_line =~ /^(.)\s+cookbooks\/(.+)/
     next if $1 == "D"
     cookbook = $2.split('/').first
+    next if seen_cookbooks.include?(cookbook)
   else
     next
   end
@@ -35,15 +42,16 @@ STDIN.each_line do |diff_line|
   if !system("git add #{metadata_file}") 
     raise "Failed to git add #{metdata_file}: #{$?}"
   end
+  seen_cookbooks << cookbook
   updated = true
 end
 
 if updated
-  if !system("git commit -m 'Updated patch level for #{ARGV.join(', ')}'")
+  if !system("git commit -m 'Updated patch level for #{seen_cookbooks.join(', ')}'")
     raise "Failed to git commit"
   end
 
-  if !system("git push") 
+  if !system("git push origin master") 
     raise "Failed to git push"
   end
 end

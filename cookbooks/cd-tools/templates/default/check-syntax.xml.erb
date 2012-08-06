@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Check that a proposed cookbook change merges cleanly and has no syntax errors</description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers class="vector">
+    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
+      <spec></spec>
+      <gerritProjects>
+        <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
+          <compareType>PLAIN</compareType>
+          <pattern><%= @job['gerrit_project'] %></pattern>
+          <branches>
+            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+              <compareType>ANT</compareType>
+              <pattern>**</pattern>
+            </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+          </branches>
+        </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
+      </gerritProjects>
+      <silentMode>false</silentMode>
+      <escapeQuotes>true</escapeQuotes>
+      <triggerOnPatchsetUploadedEvent>true</triggerOnPatchsetUploadedEvent>
+      <triggerOnChangeMergedEvent>false</triggerOnChangeMergedEvent>
+      <triggerOnCommentAddedEvent>false</triggerOnCommentAddedEvent>
+      <triggerOnRefUpdatedEvent>false</triggerOnRefUpdatedEvent>
+      <commentAddedTriggerApprovalCategory></commentAddedTriggerApprovalCategory>
+      <commentAddedTriggerApprovalValue></commentAddedTriggerApprovalValue>
+      <buildStartMessage></buildStartMessage>
+      <buildFailureMessage></buildFailureMessage>
+      <buildSuccessfulMessage></buildSuccessfulMessage>
+      <buildUnstableMessage></buildUnstableMessage>
+      <customUrl></customUrl>
+    </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>/var/lib/jenkins/tools/gerrit-git-prep.sh <%= @job['gerrit_host_name'] %></command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>#!/bin/bash
+export CHEF_SERVER_URL=<%= @job['chef_server_url'] %>
+export NODE_NAME=<%= @job['node_name'] %>
+export CLIENT_KEY=<%= @job['client_key'] %>
+/opt/chef/bin/knife cookbook test -c /var/lib/jenkins/tools/ci-knife.rb -a</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>

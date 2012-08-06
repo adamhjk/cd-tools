@@ -120,3 +120,4 @@ else
     git reset --hard $GERRIT_NEWREV
     git clean -x -f -d -q
 fi
+

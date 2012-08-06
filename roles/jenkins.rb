@@ -1,6 +1,6 @@
 name "jenkins"
 description "Jenkins Server"
-run_list [ "recipe[yum]", "recipe[build-essential]", "recipe[nginx::source]", "recipe[java]", "recipe[jenkins]", "recipe[jenkins::cd]", "recipe[postgresql::server]", "recipe[gerrit]", "recipe[foodcritic]" ]
+run_list [ "recipe[yum]", "recipe[build-essential]", "recipe[nginx::source]", "recipe[java]", "recipe[jenkins]", "recipe[postgresql::server]", "recipe[gerrit]", "recipe[foodcritic]", "recipe[cd-tools]" ]
 default_attributes(
   'jenkins' => {
     'http_proxy' => {
@@ -8,7 +8,7 @@ default_attributes(
       'variant' => 'nginx'
     },
     'server' => {
-      'plugins' => [ 'git', 'gerrit-trigger', 'build-pipeline-plugin', 'github', 'greenballs', 'analysis-core', 'warnings', 'parameterized-trigger' ]
+      'plugins' => [ 'git', 'build-pipeline-plugin', 'github', 'greenballs', 'analysis-core', 'warnings', 'parameterized-trigger' ]
     }
   },
   'gerrit' => {
@@ -16,5 +16,11 @@ default_attributes(
       'host_name' => "review.local"
     },
     'canonical_url' => "http://review.local/"
+  },
+  'cd-tools' => {
+    'gerrit' => {
+      'hostname' => "review.local"
+      'front_end_url' => "http://review.local/"
+    }
   }
 )

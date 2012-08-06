@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl>
+  <config class="com.sonyericsson.hudson.plugins.gerrit.trigger.config.Config">
+    <gerritHostName><%= node['cd-tools']['gerrit']['hostname'] %></gerritHostName>
+    <gerritSshPort><%= node['cd-tools']['gerrit']['ssh_port'] %></gerritSshPort>
+    <gerritUserName><%= node['cd-tools']['gerrit']['username'] %></gerritUserName>
+    <gerritAuthKeyFile><%= node['cd-tools']['gerrit']['auth_key_file'] %></gerritAuthKeyFile>
+    <gerritBuildCurrentPatchesOnly>false</gerritBuildCurrentPatchesOnly>
+    <numberOfWorkerThreads>3</numberOfWorkerThreads>
+    <gerritVerifiedCmdBuildSuccessful>gerrit approve &lt;CHANGE&gt;,&lt;PATCHSET&gt; --message &apos;Build Successful &lt;BUILDS_STATS&gt;&apos; --verified &lt;VERIFIED&gt; --code-review &lt;CODE_REVIEW&gt;</gerritVerifiedCmdBuildSuccessful>
+    <gerritVerifiedCmdBuildUnstable>gerrit approve &lt;CHANGE&gt;,&lt;PATCHSET&gt; --message &apos;Build Unstable &lt;BUILDS_STATS&gt;&apos; --verified &lt;VERIFIED&gt; --code-review &lt;CODE_REVIEW&gt;</gerritVerifiedCmdBuildUnstable>
+    <gerritVerifiedCmdBuildFailed>gerrit approve &lt;CHANGE&gt;,&lt;PATCHSET&gt; --message &apos;Build Failed &lt;BUILDS_STATS&gt;&apos; --verified &lt;VERIFIED&gt; --code-review &lt;CODE_REVIEW&gt;</gerritVerifiedCmdBuildFailed>
+    <gerritVerifiedCmdBuildStarted>gerrit approve &lt;CHANGE&gt;,&lt;PATCHSET&gt; --message &apos;Build Started &lt;BUILDURL&gt; &lt;STARTED_STATS&gt;&apos; --verified &lt;VERIFIED&gt; --code-review &lt;CODE_REVIEW&gt;</gerritVerifiedCmdBuildStarted>
+    <gerritFrontEndUrl><%= node['cd-tools']['gerrit']['front_end_url'] %></gerritFrontEndUrl>
+    <gerritBuildStartedVerifiedValue>0</gerritBuildStartedVerifiedValue>
+    <gerritBuildStartedCodeReviewValue>0</gerritBuildStartedCodeReviewValue>
+    <gerritBuildSuccessfulVerifiedValue>1</gerritBuildSuccessfulVerifiedValue>
+    <gerritBuildSuccessfulCodeReviewValue>0</gerritBuildSuccessfulCodeReviewValue>
+    <gerritBuildFailedVerifiedValue>-1</gerritBuildFailedVerifiedValue>
+    <gerritBuildFailedCodeReviewValue>0</gerritBuildFailedCodeReviewValue>
+    <gerritBuildUnstableVerifiedValue>0</gerritBuildUnstableVerifiedValue>
+    <gerritBuildUnstableCodeReviewValue>-1</gerritBuildUnstableCodeReviewValue>
+    <enableManualTrigger>true</enableManualTrigger>
+    <numberOfSendingWorkerThreads>1</numberOfSendingWorkerThreads>
+    <buildScheduleDelay>3</buildScheduleDelay>
+  </config>
+</com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl>

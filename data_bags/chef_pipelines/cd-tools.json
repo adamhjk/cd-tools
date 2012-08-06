@@ -1,6 +1,6 @@
 {
-  "id": "cd_tools",
-  "gerrit_project": "cd_tools",
+  "id": "cd-tools",
+  "gerrit_project": "cd-tools",
   "gerrit_host_name": "review.local",
   "chef_server_url": "https://api.opscode.com/organizations/opscode-cd",
   "node_name": "jenkins",

@@ -117,5 +117,6 @@ service "gerrit" do
   supports :restart => true 
   pattern "GerritCodeReview"
   action [:enable, :start]
+  provider Chef::Provider::Service::Init
 end
 

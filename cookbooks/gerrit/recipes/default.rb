@@ -115,6 +115,7 @@ end
 
 service "gerrit" do
   supports :restart => true 
+  pattern "GerritCodeReview"
   action [:enable, :start]
 end
 

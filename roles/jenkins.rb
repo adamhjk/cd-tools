@@ -1,6 +1,6 @@
 name "jenkins"
 description "Jenkins Server"
-run_list [ "recipe[yum]", "recipe[build-essential]", "recipe[nginx::source]", "recipe[java]", "recipe[jenkins]", "recipe[jenkins::cd]", "recipe[postgresql::server]", "recipe[gerrit]", "recipe[foodcritic]" ]
+run_list [ "recipe[yum]", "recipe[build-essential]", "recipe[nginx::source]", "recipe[java]", "recipe[jenkins]", "recipe[jenkins::cd]", "recipe[git]", "recipe[postgresql::server]", "recipe[gerrit]", "recipe[foodcritic]" ]
 default_attributes(
   'jenkins' => {
     'http_proxy' => {

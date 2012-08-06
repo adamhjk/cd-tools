@@ -114,8 +114,12 @@ link "/etc/init.d/gerrit" do
 end
 
 service "gerrit" do
-  supports :restart => true, :status => false
-  pattern "GerritCodeReview"
-  action [:enable, :start]
+  supports :restart => true
+  start_command "/etc/init.d/gerrit start"
+  stop_command "/etc/init.d/gerrit stop"
+  restart_command "/etc/init.d/gerrit restart"
+  status_command "ps auwwx | grep GerritCodeReview | grep gerrit2"
+  provider Chef::Provider::Service::Init	
+  action :start
 end
 

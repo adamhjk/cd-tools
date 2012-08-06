@@ -6,7 +6,7 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-
+include_recipe "git"
 include_recipe "postgresql::server"
 
 node.default['gerrit']['war_file'] = File.basename(node['gerrit']['url'])

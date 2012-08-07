@@ -17,13 +17,19 @@
       "server": {
         "plugins": [
           "git",
-          "gerrit-trigger",
           "build-pipeline-plugin",
           "github",
           "greenballs",
           "analysis-core",
-          "warnings"
+          "warnings",
+          "parameterized-trigger"
         ]
+      }
+    },
+    "cd-tools": {
+      "gerrit": {
+        "hostname": "review.local",
+        "front_end_url": "http://review.local/"
       }
     }
   },
@@ -36,9 +42,10 @@
     "recipe[nginx::source]",
     "recipe[java]",
     "recipe[jenkins]",
-    "recipe[jenkins::cd]",
     "recipe[postgresql::server]",
-    "recipe[gerrit]"
+    "recipe[gerrit]",
+    "recipe[foodcritic]",
+    "recipe[cd-tools]"
   ],
   "env_run_lists": {
   }

@@ -180,7 +180,7 @@ Next, let's set up memcached with some additional options. First, the
 
     #!/bin/sh
     exec 2>&1
-    exec chpst -u <%= @options['user'] %> /usr/bin/memcached -v -m <%= @options['memory'] %> -p <%= @options['port'] %>
+    exec chpst -u <%= @options[:user] %> /usr/bin/memcached -v -m <%= @options[:memory] %> -p <%= @options[:port] %>
 
 Note that the script uses chpst (which comes with runit) to set the
 user option, then starts memcached on the specified memory and port
@@ -196,9 +196,9 @@ Finally, the `runit_service` in our recipe:
 
     runit_service "memcached" do
       options({
-        :memory => node['memcached']['memory'],
-        :port => node['memcached']['port'],
-        :user => node['memcached']['user']}.merge(params)
+        :memory => node[:memcached][:memory],
+        :port => node[:memcached][:port],
+        :user => node[:memcached][:user]}.merge(params)
       )
     end
 

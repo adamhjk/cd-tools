@@ -45,7 +45,7 @@
       <command>/var/lib/jenkins/tools/gerrit-git-prep.sh <%= @job['gerrit_host_name'] %></command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>/opt/chef/embedded/bin/foodcritic ./chef-repo/cookbooks ./cookbooks <%= @job['food_critic_options'] %></command>
+      <command>/opt/chef/embedded/bin/foodcritic ./cookbooks <%= @job['food_critic_options'] %></command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>

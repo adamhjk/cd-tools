@@ -66,7 +66,7 @@ search(:chef_pipelines, "*:*") do |pipeline|
       group "jenkins"
       mode "0644"
       notifies :restart, "service[jenkins]"
-      variables(:job => job_partial)
+      variables(:job => pipeline)
     end
   end
 end

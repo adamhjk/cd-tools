@@ -8,3 +8,4 @@ version          "0.0.13"
 depends 'nginx'
 depends 'postgresql'
 depends 'database'
+depends 'git'

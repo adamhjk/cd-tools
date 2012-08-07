@@ -8,6 +8,7 @@
 #
 
 include_recipe "postgresql::server"
+include_recipe "git"
 
 node.default['gerrit']['war_file'] = File.basename(node['gerrit']['url'])
 node.default['gerrit']['war_path'] = File.join(node['gerrit']['path'], node['gerrit']['war_file'])

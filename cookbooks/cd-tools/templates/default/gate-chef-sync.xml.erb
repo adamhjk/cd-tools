@@ -20,7 +20,7 @@
       <hudson.plugins.git.UserRemoteConfig>
         <name></name>
         <refspec>$GERRIT_REFSPEC</refspec>
-        <url>>ssh://jenkins@%<%= @job['gerrit_host_name'] %>:29418/<%= @job['gerrit_project'] %>.git</url>
+        <url>ssh://jenkins@<%= @job['gerrit_host_name'] %>:29418/<%= @job['gerrit_project'] %>.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>

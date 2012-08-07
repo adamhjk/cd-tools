@@ -3,6 +3,9 @@
   "description": "Jenkins and Gerrit Server",
   "json_class": "Chef::Role",
   "default_attributes": {
+    "build_essential": {
+      "compiletime": true
+    },
     "gerrit": {
       "http_proxy": {
         "host_name": "review.local"

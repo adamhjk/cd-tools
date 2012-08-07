@@ -50,7 +50,7 @@ template "/var/lib/jenkins/hudson.plugins.warnings.WarningsPublisher.xml" do
 end
 
 search(:chef_pipelines, "*:*") do |pipeline|
-  %w{check-syntax check-foodcritic gate-syntax gate-chef-sync"}.each do |job_partial|
+  %w{check-syntax check-foodcritic gate-syntax gate-chef-sync}.each do |job_partial|
     job_directory = "/var/lib/jenkins/jobs/#{pipeline['id']}-#{job_partial}"
 
     directory job_directory do

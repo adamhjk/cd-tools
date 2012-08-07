@@ -43,13 +43,13 @@ when "debian", "ubuntu"
   include_recipe "postgresql::server_debian"
 end
 
-# template "#{node['postgresql']['dir']}/pg_hba.conf" do
-#   source "pg_hba.conf.erb"
-#   owner "postgres"
-#   group "postgres"
-#   mode 0600
-#   notifies :reload, resources(:service => "postgresql"), :immediately
-# end
+template "#{node['postgresql']['dir']}/pg_hba.conf" do
+  source "pg_hba.conf.erb"
+  owner "postgres"
+  group "postgres"
+  mode 0600
+  notifies :reload, resources(:service => "postgresql"), :immediately
+end
 
 # Default PostgreSQL install has 'ident' checking on unix user 'postgres'
 # and 'md5' password checking with connections from 'localhost'. This script

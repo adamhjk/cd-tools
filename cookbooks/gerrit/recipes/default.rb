@@ -110,8 +110,11 @@ nginx_site "gerrit.conf" do
   enable true
 end
 
-link "/etc/init.d/gerrit" do
-  to File.join(node['gerrit']['site_path'], "bin", "gerrit.sh") 
+template "/etc/init.d/gerrit" do
+  source "gerrit.erb"
+  owner "root"
+  group "root"
+  mode "0755"
 end
 
 execute "start gerrit at boot" do

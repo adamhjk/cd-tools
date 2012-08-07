@@ -1,0 +1,45 @@
+{
+  "name": "jenkins",
+  "description": "Jenkins Server",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+    "gerrit": {
+      "http_proxy": {
+        "host_name": "review.local"
+      },
+      "canonical_url": "http://review.local/"
+    },
+    "jenkins": {
+      "http_proxy": {
+        "host_name": "jenkins.local",
+        "variant": "nginx"
+      },
+      "server": {
+        "plugins": [
+          "git",
+          "gerrit-trigger",
+          "build-pipeline-plugin",
+          "github",
+          "greenballs",
+          "analysis-core",
+          "warnings"
+        ]
+      }
+    }
+  },
+  "override_attributes": {
+  },
+  "chef_type": "role",
+  "run_list": [
+    "recipe[yum]",
+    "recipe[build-essential]",
+    "recipe[nginx::source]",
+    "recipe[java]",
+    "recipe[jenkins]",
+    "recipe[jenkins::cd]",
+    "recipe[postgresql::server]",
+    "recipe[gerrit]"
+  ],
+  "env_run_lists": {
+  }
+}

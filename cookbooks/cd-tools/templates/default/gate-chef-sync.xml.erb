@@ -83,7 +83,7 @@ export CLIENT_KEY=<%= @job['client_key'] %>
 export CHEF_SERVER_URL=<%= @job['chef_server_url'] %>
 export NODE_NAME=<%= @job['node_name'] %>
 export CLIENT_KEY=<%= @job['client_key'] %>
-/opt/chef/bin/knife upload -c /var/lib/jenkins/tools/ci-knife.rb</command>
+/opt/chef/bin/knife upload -c /var/lib/jenkins/tools/ci-knife.rb -VV</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>

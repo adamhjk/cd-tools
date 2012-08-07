@@ -57,7 +57,7 @@ search(:chef_pipelines, "*:*") do |pipeline|
       owner "jenkins"
       group "jenkins"
       mode "0755"
-      recursive :true
+      recursive true
     end
     
     template File.join(job_directory, "config.xml") do

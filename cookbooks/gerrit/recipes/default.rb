@@ -113,6 +113,11 @@ link "/etc/init.d/gerrit" do
   to File.join(node['gerrit']['site_path'], "bin", "gerrit.sh") 
 end
 
+execute "start gerrit at boot" do
+  command "chkconfig --add gerrit"
+  not_if { File.exists?("/etc/rc3.d/S99gerrit") }  
+end
+
 service "gerrit" do
   supports :restart => true
   start_command "/etc/init.d/gerrit start"

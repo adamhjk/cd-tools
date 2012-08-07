@@ -19,7 +19,7 @@ default_attributes(
   },
   'cd-tools' => {
     'gerrit' => {
-      'hostname' => "review.local"
+      'hostname' => "review.local",
       'front_end_url' => "http://review.local/"
     }
   }

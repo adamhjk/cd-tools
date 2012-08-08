@@ -278,8 +278,6 @@ ulimit -v unlimited    ; # virtual memory
 
 ulimit -x >/dev/null 2>&1 && ulimit -x unlimited  ; # file locks
 
-umask 0022
-
 #####################################################
 # This is how the Gerrit server will be started
 #####################################################
@@ -356,6 +354,7 @@ case "$ACTION" in
       if start-stop-daemon -S -b $CH_USER \
          -p "$GERRIT_PID" -m \
          -d "$GERRIT_SITE" \
+         -k 0022 \
          -a "$RUN_EXEC" -- $RUN_Arg1 "$RUN_Arg2" $RUN_Arg3 $RUN_ARGS
       then
         : OK
@@ -382,6 +381,7 @@ case "$ACTION" in
         chown $GERRIT_USER "$GERRIT_PID"
         su - $GERRIT_USER -c "
           JAVA='$JAVA' ; export JAVA ;
+          umask 0022 ; 
           $RUN_EXEC $RUN_Arg1 '$RUN_Arg2' $RUN_Arg3 $RUN_ARGS </dev/null >/dev/null 2>&1 &
           PID=\$! ;
           disown ;

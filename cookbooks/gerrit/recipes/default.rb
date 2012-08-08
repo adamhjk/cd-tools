@@ -6,7 +6,7 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-
+include_recipe "git"
 include_recipe "postgresql::server"
 include_recipe "git"
 
@@ -52,6 +52,7 @@ end
 
 postgresql_database node['gerrit']['db_name'] do
   connection ({:host => "127.0.0.1", :port => 5432, :username => 'postgres', :password => node['postgresql']['password']['postgres']})
+  template 'template0'
   encoding 'UTF-8'
   owner node['gerrit']['username']
 end
